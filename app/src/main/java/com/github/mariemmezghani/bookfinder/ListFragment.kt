@@ -16,9 +16,11 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val binding: FragmentListBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
+        binding.toolbar.title = "My Reading List"
         binding.addButton.setOnClickListener { view ->
             view.findNavController()
                 .navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
