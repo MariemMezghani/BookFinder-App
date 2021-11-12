@@ -14,5 +14,12 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.github.mariemmezghani.bookfinder.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="DetailFragment" >
+        <action
+            android:id="@+id/action_detailFragment_to_listFragment"
+            app:destination="@id/listFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/listFragment"
+            />
+    </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -37,8 +38,10 @@ class ListFragment : Fragment() {
         val database = BookDatabase.getInstance(application).bookDao
 
         // viewModel
-        viewModel= ViewModelProvider(this, Injection.provideViewModelFactory(database))
-            .get(BookViewModel::class.java)
+        val viewModel: BookViewModel by activityViewModels {
+            Injection.provideViewModelFactory(database)
+        }
+
         binding.viewModel=viewModel
 
         // specify the current activity as the current lifecycleowner of the binding.

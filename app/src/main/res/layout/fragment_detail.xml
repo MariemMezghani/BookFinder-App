@@ -3,6 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="book"
+            type="com.github.mariemmezghani.bookfinder.database.Book" />
+
+        <variable
+            name="viewModel"
+            type="com.github.mariemmezghani.bookfinder.viewModel.BookViewModel" />
+    </data>
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,6 +49,7 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/book_name_edittext"
                 android:inputType="textPersonName"
+                android:text="@={book.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +80,7 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/author_edittext"
                 android:inputType="textPersonName"
+                android:text="@={book.author}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/author_textview" />
@@ -96,6 +110,7 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/published_date_string"
                 android:inputType="datetime"
+                android:text="@={book.publishedDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/published_date_textview" />
@@ -131,7 +146,7 @@
                     android:id="@+id/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
+                    android:checked="@={book.read}"
                     android:fontFamily="@font/rubik_light"
                     android:paddingRight="@dimen/margin_half"
                     android:text="@string/read"
@@ -141,9 +156,9 @@
                     android:id="@+id/radioButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
+                    android:checked="@={book.unread}"
                     android:fontFamily="@font/rubik_light"
-                    android:paddingRight="@dimen/margin_half"
+                    android:paddingEnd="@dimen/margin_half"
                     android:text="@string/unread"
                     android:textSize="18sp" />
 
@@ -151,7 +166,7 @@
                     android:id="@+id/radioButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
+                    android:checked="@={book.inProgress}"
                     android:fontFamily="@font/rubik_light"
                     android:paddingRight="@dimen/margin_half"
                     android:text="@string/in_progress"
@@ -167,6 +182,7 @@
                 android:layout_marginEnd="@dimen/margin_half"
                 android:background="@drawable/round_button_rot"
                 android:fontFamily="@font/rubik_medium"
+                android:onClick="@{()-> viewModel.onCancel()}"
                 android:text="@string/cancel_button"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/save_button"
@@ -182,13 +198,13 @@
                 android:layout_marginEnd="@dimen/margin_half"
                 android:background="@drawable/round_button_green"
                 android:fontFamily="@font/rubik_medium"
+                android:onClick="@{() -> viewModel.onAddProduct(book)}"
                 android:text="@string/save_button"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.492"
                 app:layout_constraintStart_toEndOf="@+id/cancel_button"
                 app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

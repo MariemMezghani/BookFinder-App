@@ -6,4 +6,8 @@ import com.github.mariemmezghani.bookfinder.database.BookDao
 
 class BookRepository(private val database: BookDao) {
     var savedBooks: LiveData<List<Book>> = database.getAllBooks()
+    suspend fun insert(book:Book) {
+        database.insert(book)
+
+    }
 }
