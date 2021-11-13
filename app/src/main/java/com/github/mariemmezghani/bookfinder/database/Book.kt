@@ -10,11 +10,11 @@ data class Book(
     @PrimaryKey(autoGenerate = true)
     var bookId: Long = 0L,
     @ColumnInfo
-    var name:String = "book",
+    var name:String = "",
     @ColumnInfo
-    var author: String = "author",
+    var author: String = "",
     @ColumnInfo
-    var publishedDate: String = "date",
+    var publishedDate: String = "",
     @ColumnInfo
     var read: Boolean = false,
     @ColumnInfo

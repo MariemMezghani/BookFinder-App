@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,7 +19,7 @@ import com.github.mariemmezghani.bookfinder.viewModel.BookViewModel
 
 class ListFragment : Fragment() {
 
-    private lateinit var viewModel:BookViewModel
+    private lateinit var viewModel: BookViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +42,17 @@ class ListFragment : Fragment() {
         val viewModel: BookViewModel by activityViewModels {
             Injection.provideViewModelFactory(database)
         }
+        binding.viewModel = viewModel
 
-        binding.viewModel=viewModel
+        // adapter
+        val adapter = BookAdapter()
+        binding.recyclerview.adapter = adapter
+        viewModel.books.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
 
         // specify the current activity as the current lifecycleowner of the binding.
         // This is necessary so that the binding can observe LiveData updates

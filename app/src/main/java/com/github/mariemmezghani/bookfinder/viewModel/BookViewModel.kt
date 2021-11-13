@@ -9,33 +9,38 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 
-class BookViewModel(private val repository: BookRepository): ViewModel() {
-    val books=repository.savedBooks
-    val navigateToListFragment : LiveData<Boolean>
-        get()= _navigateToListFragment
+class BookViewModel(private val repository: BookRepository) : ViewModel() {
+    val books = repository.savedBooks
+    val navigateToListFragment: LiveData<Boolean>
+        get() = _navigateToListFragment
 
-    private var _navigateToListFragment=MutableLiveData<Boolean>()
+    private var _navigateToListFragment = MutableLiveData<Boolean>()
     private val _cancelNavigation = MutableLiveData<Boolean>()
 
     val cancelNavigation: LiveData<Boolean>
         get() = _cancelNavigation
+
     init {
         getAllBooks()
     }
-    fun getAllBooks()= books
-    fun onAddProduct(book: Book){
-        viewModelScope.launch{
+
+    fun getAllBooks() = books
+    fun onAddProduct(book: Book) {
+        viewModelScope.launch {
             repository.insert(book)
-            _navigateToListFragment.value=true
+            _navigateToListFragment.value = true
         }
 
     }
-    fun doneNavigating(){
+
+    fun doneNavigating() {
         _navigateToListFragment.value = false
     }
+
     fun onCancel() {
         _cancelNavigation.value = true
     }
+
     fun navigationCancelled() {
         _cancelNavigation.value = false
     }
