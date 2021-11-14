@@ -15,6 +15,7 @@ import com.github.mariemmezghani.bookfinder.database.BookDatabase
 import com.github.mariemmezghani.bookfinder.databinding.FragmentListBinding
 import com.github.mariemmezghani.bookfinder.utils.Injection
 import com.github.mariemmezghani.bookfinder.viewModel.BookViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class ListFragment : Fragment() {

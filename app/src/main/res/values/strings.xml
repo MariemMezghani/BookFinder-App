@@ -5,7 +5,8 @@
     <string name="save_button">save</string>
     <string name="book_name_string">Book Name</string>
     <string name="author_string">Author</string>
-    <string name="published_date_string">Published Date</string>
+    <string name="published_date_text">Published Date</string>
+    <string name="published_date_string">dd/mm/yyyy</string>
     <string name="status_string">Status</string>
     <string name="book_name_edittext">Book Name</string>
     <string name="author_edittext">Author</string>

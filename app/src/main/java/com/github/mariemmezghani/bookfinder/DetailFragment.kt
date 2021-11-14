@@ -14,9 +14,11 @@ import androidx.navigation.fragment.findNavController
 import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.database.BookDatabase
 import com.github.mariemmezghani.bookfinder.databinding.FragmentDetailBinding
+import com.github.mariemmezghani.bookfinder.utils.DateInputMask
 import com.github.mariemmezghani.bookfinder.utils.Injection
 import com.github.mariemmezghani.bookfinder.viewModel.BookViewModel
 import com.github.mariemmezghani.bookfinder.viewModel.BookViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 
 class DetailFragment : Fragment() {
@@ -57,9 +59,21 @@ class DetailFragment : Fragment() {
                 viewModel.navigationCancelled()
             }
         })
+        //Snackbar
+        viewModel.showSnackBar.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    "enter book name",
+                    Snackbar.LENGTH_SHORT // How long to display the message.
+                ).show()
+                viewModel.doneShowingSnackBar()
+            }
+        })
+        // edittext date
+        DateInputMask(binding.publishedDateEdittext).listen()
 
         return binding.root
     }
-
 
 }
