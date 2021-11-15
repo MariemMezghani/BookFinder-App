@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 
 class BookViewModel(private val repository: BookRepository) : ViewModel() {
-    val books = repository.savedBooks
+    var books = repository.savedBooks
     val navigateToListFragment: LiveData<Boolean>
         get() = _navigateToListFragment
 
@@ -38,6 +38,10 @@ class BookViewModel(private val repository: BookRepository) : ViewModel() {
                 _navigateToListFragment.value = true
             }
         }
+    }
+
+    fun searchBooksList(query: String): LiveData<List<Book>> {
+        return repository.getSearchedBooks(query)
     }
 
     fun doneNavigating() {
