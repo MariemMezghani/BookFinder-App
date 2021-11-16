@@ -11,6 +11,10 @@ class BookRepository(private val database: BookDao) {
         database.insert(book)
     }
 
+    suspend fun update(book: Book) {
+        database.update(book)
+    }
+
     fun getSearchedBooks(query: String): LiveData<List<Book>> {
         return database.getBooks(query)
     }

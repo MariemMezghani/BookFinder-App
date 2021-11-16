@@ -1,10 +1,12 @@
 package com.github.mariemmezghani.bookfinder.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 @Entity(tableName = "books_table")
 data class Book(
     @PrimaryKey(autoGenerate = true)
@@ -24,4 +26,4 @@ data class Book(
     /* In the future we will implement the feature that allows the
      user to save an image of the book from his phone in the app*/
     /*var image: String = "path Uri"*/
-)
+):Parcelable

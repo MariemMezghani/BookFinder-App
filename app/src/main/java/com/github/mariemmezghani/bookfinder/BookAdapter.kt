@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.databinding.BookListItemBinding
 
-class BookAdapter :
-    androidx.recyclerview.widget.ListAdapter<Book, BookAdapter.ViewHolder>(ProductDiffUtil()) {
+class BookAdapter (val listener: BookListener) :
+    androidx.recyclerview.widget.ListAdapter<Book, BookAdapter.ViewHolder>( ProductDiffUtil()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -16,8 +16,7 @@ class BookAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        holder.bind(listener,getItem(position)!!)
     }
 
     class ViewHolder private constructor(val binding: BookListItemBinding) :
@@ -31,13 +30,17 @@ class BookAdapter :
             }
         }
 
-        fun bind(item: Book) {
+        fun bind(listener: BookListener,item: Book) {
             binding.book = item
+            binding.listener = listener
             binding.executePendingBindings()
 
         }
 
     }
+}
+class BookListener(val clickListener: (book: Book) -> Unit) {
+    fun onClick(book: Book) = clickListener(book)
 }
 
 class ProductDiffUtil : DiffUtil.ItemCallback<Book>() {

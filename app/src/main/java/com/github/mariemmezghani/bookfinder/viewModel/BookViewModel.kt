@@ -23,16 +23,17 @@ class BookViewModel(private val repository: BookRepository) : ViewModel() {
     val showSnackBar: LiveData<Boolean>
         get() = _showSnackBar
     private var _showSnackBar = MutableLiveData<Boolean>()
+    private val _navigateFromBook = MutableLiveData<Book>()
+    val navigateFromBook
+        get() = _navigateFromBook
 
-    init {
-        getAllBooks()
-    }
-
-    fun getAllBooks() = books
-    fun onAddProduct(book: Book) {
+    fun onSaveBook(book: Book) {
         viewModelScope.launch {
             if (book.name == "") {
                 _showSnackBar.value = true
+            } else if (_navigateFromBook.value != null) {
+                repository.update(book)
+                _navigateToListFragment.value = true
             } else {
                 repository.insert(book)
                 _navigateToListFragment.value = true
@@ -58,5 +59,13 @@ class BookViewModel(private val repository: BookRepository) : ViewModel() {
 
     fun doneShowingSnackBar() {
         _showSnackBar.value = false
+    }
+
+    fun onBookClicked(book: Book) {
+        _navigateFromBook.value = book
+    }
+
+    fun onBookNavigated() {
+        _navigateFromBook.value = null
     }
 }

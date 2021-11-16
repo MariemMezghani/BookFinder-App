@@ -9,7 +9,8 @@
         android:label="ListFragment" >
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:launchSingleTop="false" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -21,5 +22,9 @@
             app:popUpToInclusive="true"
             app:popUpTo="@id/listFragment"
             />
+        <argument
+            android:name="book"
+            app:argType="com.github.mariemmezghani.bookfinder.database.Book"
+            app:nullable="true" />
     </fragment>
 </navigation>

@@ -198,7 +198,7 @@
                 android:layout_marginEnd="@dimen/margin_half"
                 android:background="@drawable/round_button_green"
                 android:fontFamily="@font/rubik_medium"
-                android:onClick="@{() -> viewModel.onAddProduct(book)}"
+                android:onClick="@{() -> viewModel.onSaveBook(book)}"
                 android:text="@string/save_button"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -2,7 +2,6 @@ package com.github.mariemmezghani.bookfinder
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Filter
 import android.widget.Filter.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.github.mariemmezghani.bookfinder.database.BookDao
 import com.github.mariemmezghani.bookfinder.database.BookDatabase
 import com.github.mariemmezghani.bookfinder.databinding.FragmentListBinding
@@ -25,7 +25,9 @@ class ListFragment : Fragment() {
     val viewModel: BookViewModel by activityViewModels {
         Injection.provideViewModelFactory(getDatabase())
     }
-    val adapter = BookAdapter()
+    val adapter = BookAdapter(BookListener { book ->
+        viewModel.onBookClicked(book)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +40,10 @@ class ListFragment : Fragment() {
         (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
         binding.toolbar.title = "My Reading List"
         binding.addButton.setOnClickListener { view ->
-            view.findNavController()
-                .navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
+            this.findNavController()
+                .navigate(ListFragmentDirections.actionListFragmentToDetailFragment(null))
         }
-
-
+        // viewmodel
         binding.viewModel = viewModel
 
         // adapter
@@ -52,7 +53,14 @@ class ListFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
-
+        // recyclerview item navigation
+        viewModel.navigateFromBook.observe(viewLifecycleOwner, Observer { book ->
+            book?.let {
+                this.findNavController()
+                    .navigate(ListFragmentDirections.actionListFragmentToDetailFragment(book))
+                viewModel.onBookNavigated()
+            }
+        })
 
         // specify the current activity as the current lifecycleowner of the binding.
         // This is necessary so that the binding can observe LiveData updates

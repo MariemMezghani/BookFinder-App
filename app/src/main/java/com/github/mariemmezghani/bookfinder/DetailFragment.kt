@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class DetailFragment : Fragment() {
+    private lateinit var book:Book
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +40,12 @@ class DetailFragment : Fragment() {
             Injection.provideViewModelFactory(database)
         }
         // binding
-        val book = Book(name = "")
+        val args = DetailFragmentArgs.fromBundle(requireArguments()).book
+        if(args == null) {
+            book = Book(name = "")
+        }else{
+            book=args
+        }
         binding.book = book
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
