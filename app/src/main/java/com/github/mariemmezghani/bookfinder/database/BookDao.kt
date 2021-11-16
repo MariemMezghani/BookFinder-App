@@ -11,6 +11,8 @@ interface BookDao {
 
     @Update
     suspend fun update(book: Book)
+    @Delete
+    suspend fun delete(book:Book)
 
     @Query("SELECT * from books_table WHERE bookId = :bookId")
     suspend fun get(bookId: String): Book?

@@ -1,7 +1,6 @@
 package com.github.mariemmezghani.bookfinder.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.database.BookDao
 
@@ -21,6 +20,10 @@ class BookRepository(private val database: BookDao) {
 
     fun getSearchedBooks(query: String): LiveData<List<Book>> {
         return database.getBooks(query)
+    }
+
+    suspend fun delete(book: Book) {
+        return database.delete(book)
     }
 
 

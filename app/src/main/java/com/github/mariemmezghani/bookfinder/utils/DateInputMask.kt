@@ -3,55 +3,67 @@ package com.github.mariemmezghani.bookfinder.utils
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import java.util.*
 
 /* resource:
 https://stackoverflow.com/questions/16889502/how-to-mask-an-edittext-to-show-the-dd-mm-yyyy-date-format
 */
-class DateInputMask(val input : EditText) {
-
-    fun listen() {
-        input.addTextChangedListener(mDateEntryWatcher)
+class DateInputMask(input: EditText) : TextWatcher {
+    private var current = ""
+    private val ddmmyyyy = "DDMMYYYY"
+    private val cal: Calendar = Calendar.getInstance()
+    private val input: EditText
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        if (s.toString() == current) {
+            return
+        }
+        var clean = s.toString().replace("[^\\d.]|\\.".toRegex(), "")
+        val cleanC = current.replace("[^\\d.]|\\.".toRegex(), "")
+        val cl = clean.length
+        var sel = cl
+        var i = 2
+        while (i <= cl && i < 6) {
+            sel++
+            i += 2
+        }
+        //Fix for pressing delete next to a forward slash
+        if (clean == cleanC) sel--
+        if (clean.length < 8) {
+            clean = clean + ddmmyyyy.substring(clean.length)
+        } else {
+            //This part makes sure that when we finish entering numbers
+            //the date is correct, fixing it otherwise
+            var day = clean.substring(0, 2).toInt()
+            var mon = clean.substring(2, 4).toInt()
+            var year = clean.substring(4, 8).toInt()
+            mon = if (mon < 1) 1 else if (mon > 12) 12 else mon
+            cal.set(Calendar.MONTH, mon - 1)
+            year = if (year < 1000) 1000 else if (year > 2100) 2100 else year
+            cal.set(Calendar.YEAR, year)
+            // ^ first set year for the line below to work correctly
+            //with leap years - otherwise, date e.g. 29/02/2012
+            //would be automatically corrected to 28/02/2012
+            day =
+                if (day > cal.getActualMaximum(Calendar.DATE)) cal.getActualMaximum(Calendar.DATE) else day
+            clean = String.format("%02d%02d%02d", day, mon, year)
+        }
+        clean = String.format(
+            "%s/%s/%s", clean.substring(0, 2),
+            clean.substring(2, 4),
+            clean.substring(4, 8)
+        )
+        sel = if (sel < 0) 0 else sel
+        current = clean
+        input.setText(current)
+        input.setSelection(if (sel < current.length) sel else current.length)
     }
 
-    private val mDateEntryWatcher = object : TextWatcher {
+    override fun afterTextChanged(s: Editable?) {}
 
-        var edited = false
-        val dividerCharacter = "/"
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (edited) {
-                edited = false
-                return
-            }
-
-            var working = getEditText()
-
-            working = manageDateDivider(working, 2, start, before)
-            working = manageDateDivider(working, 5, start, before)
-
-            edited = true
-            input.setText(working)
-            input.setSelection(input.text.length)
-        }
-
-        private fun manageDateDivider(working: String, position : Int, start: Int, before: Int) : String{
-            if (working.length == position) {
-                return if (before <= position && start < position)
-                    working + dividerCharacter
-                else
-                    working.dropLast(1)
-            }
-            return working
-        }
-
-        private fun getEditText() : String {
-            return if (input.text.length >= 10)
-                input.text.toString().substring(0,10)
-            else
-                input.text.toString()
-        }
-
-        override fun afterTextChanged(s: Editable) {}
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+    init {
+        this.input = input
+        this.input.addTextChangedListener(this)
     }
 }
+

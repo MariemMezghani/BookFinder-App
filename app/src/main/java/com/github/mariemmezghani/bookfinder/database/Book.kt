@@ -20,7 +20,7 @@ data class Book(
     @ColumnInfo
     var read: Boolean=false,
     @ColumnInfo
-    var unread: Boolean=false,
+    var unread: Boolean=true,
     @ColumnInfo
     var inProgress: Boolean=false,
     /* In the future we will implement the feature that allows the

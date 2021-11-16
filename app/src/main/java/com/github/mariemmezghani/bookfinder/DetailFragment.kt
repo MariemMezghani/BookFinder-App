@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.database.BookDatabase
@@ -17,12 +15,11 @@ import com.github.mariemmezghani.bookfinder.databinding.FragmentDetailBinding
 import com.github.mariemmezghani.bookfinder.utils.DateInputMask
 import com.github.mariemmezghani.bookfinder.utils.Injection
 import com.github.mariemmezghani.bookfinder.viewModel.BookViewModel
-import com.github.mariemmezghani.bookfinder.viewModel.BookViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 
 class DetailFragment : Fragment() {
-    private lateinit var book:Book
+    private lateinit var book: Book
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,10 +38,10 @@ class DetailFragment : Fragment() {
         }
         // binding
         val args = DetailFragmentArgs.fromBundle(requireArguments()).book
-        if(args == null) {
+        if (args == null) {
             book = Book(name = "")
-        }else{
-            book=args
+        } else {
+            book = args
         }
         binding.book = book
         binding.viewModel = viewModel
@@ -77,7 +74,7 @@ class DetailFragment : Fragment() {
             }
         })
         // edittext date
-        DateInputMask(binding.publishedDateEdittext).listen()
+        DateInputMask(binding.publishedDateEdittext)
 
         return binding.root
     }

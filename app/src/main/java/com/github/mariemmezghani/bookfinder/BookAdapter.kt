@@ -1,5 +1,6 @@
 package com.github.mariemmezghani.bookfinder
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.databinding.BookListItemBinding
 
-class BookAdapter (val listener: BookListener) :
-    androidx.recyclerview.widget.ListAdapter<Book, BookAdapter.ViewHolder>( ProductDiffUtil()) {
+class BookAdapter(val listener: BookListener) :
+    androidx.recyclerview.widget.ListAdapter<Book, BookAdapter.ViewHolder>(ProductDiffUtil()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -16,7 +17,7 @@ class BookAdapter (val listener: BookListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listener,getItem(position)!!)
+        holder.bind(listener, getItem(position)!!)
     }
 
 
@@ -31,15 +32,26 @@ class BookAdapter (val listener: BookListener) :
             }
         }
 
-        fun bind(listener: BookListener,item: Book) {
+        fun bind(listener: BookListener, item: Book) {
             binding.book = item
             binding.listener = listener
+            if (item.read) {
+                binding.status.text = "Read"
+                binding.status.setTextColor(Color.parseColor("#73C088"))
+            } else if (item.unread) {
+                binding.status.text = "Unread"
+                binding.status.setTextColor(Color.parseColor("#7f0000"))
+            } else if (item.inProgress) {
+                binding.status.text = "In Progress"
+                binding.status.setTextColor(Color.parseColor("#FFBB86FC"))
+            }
+
             binding.executePendingBindings()
 
         }
-
     }
 }
+
 class BookListener(val clickListener: (book: Book) -> Unit) {
     fun onClick(book: Book) = clickListener(book)
 }

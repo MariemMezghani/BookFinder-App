@@ -3,7 +3,6 @@ package com.github.mariemmezghani.bookfinder
 import android.app.Activity
 import android.os.Bundle
 import android.view.*
-import android.widget.Filter.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,16 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.database.BookDao
 import com.github.mariemmezghani.bookfinder.database.BookDatabase
 import com.github.mariemmezghani.bookfinder.databinding.FragmentListBinding
 import com.github.mariemmezghani.bookfinder.utils.Injection
 import com.github.mariemmezghani.bookfinder.viewModel.BookViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-
 
 class ListFragment : Fragment() {
 
@@ -65,6 +63,27 @@ class ListFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+        // recyclerview delete item
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val book = adapter.currentList[viewHolder.adapterPosition]
+                viewModel.onBookSwiped(book)
+            }
+
+        }).attachToRecyclerView(binding.recyclerview)
+
+
         // recyclerview item navigation
         viewModel.navigateFromBook.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
@@ -114,6 +133,7 @@ class ListFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_search, menu)
         val searchItem = menu.findItem(R.id.searchText)
+
         // convert searchItem in menu to SearchView Widget
         val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
         // enables submit button in the SearchView
@@ -144,8 +164,9 @@ class ListFragment : Fragment() {
     }
 
     private fun searchBooks(query: String) {
+        val search = "%$query%"
 
-        viewModel.searchBooksList(query).observe(viewLifecycleOwner, Observer {
+        viewModel.searchBooksList(search).observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }

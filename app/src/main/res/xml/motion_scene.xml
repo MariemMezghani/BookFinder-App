@@ -81,15 +81,16 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/menu_title" />
         <Constraint
-            android:layout_height="wrap_content"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="408dp"
-            motion:layout_constraintBottom_toTopOf="@+id/parent"
-            motion:layout_constraintHorizontal_bias="0.289"
-            motion:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/unread"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:rotation="90"
+            android:translationX="100dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/in_progress"
-            android:id="@+id/unread" />
+             />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -159,5 +160,15 @@
             motion:layout_constraintHorizontal_bias="0.5"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/menu_title" />
+        <Constraint
+            android:id="@+id/unread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/in_progress"
+            />
     </ConstraintSet>
 </MotionScene>
