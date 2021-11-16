@@ -7,6 +7,10 @@ import com.github.mariemmezghani.bookfinder.database.BookDao
 
 class BookRepository(private val database: BookDao) {
     var savedBooks: LiveData<List<Book>> = database.getAllBooks()
+    var readBooks: LiveData<List<Book>> = database.getReadBooks()
+    var inProgressBooks: LiveData<List<Book>> = database.getInProgressReadBooks()
+    var unreadBooks: LiveData<List<Book>> = database.getUnReadBooks()
+
     suspend fun insert(book: Book) {
         database.insert(book)
     }
@@ -18,4 +22,6 @@ class BookRepository(private val database: BookDao) {
     fun getSearchedBooks(query: String): LiveData<List<Book>> {
         return database.getBooks(query)
     }
+
+
 }

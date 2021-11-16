@@ -11,6 +11,10 @@ import kotlinx.coroutines.launch
 
 class BookViewModel(private val repository: BookRepository) : ViewModel() {
     var books = repository.savedBooks
+    var readBooks = repository.readBooks
+    var inProgressBooks = repository.inProgressBooks
+    var unreadBooks = repository.unreadBooks
+
     val navigateToListFragment: LiveData<Boolean>
         get() = _navigateToListFragment
 

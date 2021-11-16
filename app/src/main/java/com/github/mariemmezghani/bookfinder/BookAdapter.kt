@@ -19,6 +19,7 @@ class BookAdapter (val listener: BookListener) :
         holder.bind(listener,getItem(position)!!)
     }
 
+
     class ViewHolder private constructor(val binding: BookListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

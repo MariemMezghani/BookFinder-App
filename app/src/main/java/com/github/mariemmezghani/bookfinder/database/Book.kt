@@ -18,11 +18,11 @@ data class Book(
     @ColumnInfo
     var publishedDate: String = "",
     @ColumnInfo
-    var read: Boolean = false,
+    var read: Boolean=false,
     @ColumnInfo
-    var unread: Boolean = false,
+    var unread: Boolean=false,
     @ColumnInfo
-    var inProgress: Boolean = false,
+    var inProgress: Boolean=false,
     /* In the future we will implement the feature that allows the
      user to save an image of the book from his phone in the app*/
     /*var image: String = "path Uri"*/

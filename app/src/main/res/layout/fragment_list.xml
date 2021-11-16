@@ -67,5 +67,8 @@
 
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <include
+            android:id="@+id/menu"
+            layout="@layout/motion_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

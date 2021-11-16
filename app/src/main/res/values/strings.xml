@@ -10,10 +10,15 @@
     <string name="status_string">Status</string>
     <string name="book_name_edittext">Book Name</string>
     <string name="author_edittext">Author</string>
-    <string name="read">Read</string>
-    <string name="unread">Unread</string>
-    <string name="in_progress">In Progress</string>
     <string name="search">Search</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <string name="my_reading_list">My Reading List</string>
+    <string name="all_books">All Books</string>
+    <string name="read">Read</string>
+    <string name="in_progress">In Progress</string>
+    <string name="unread">Unread</string>
+    <string name="by_m_m">by M.M</string>
 
 
 </resources>

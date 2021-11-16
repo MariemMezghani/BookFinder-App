@@ -1,15 +1,19 @@
 package com.github.mariemmezghani.bookfinder
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import android.widget.Filter.*
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.github.mariemmezghani.bookfinder.database.Book
 import com.github.mariemmezghani.bookfinder.database.BookDao
 import com.github.mariemmezghani.bookfinder.database.BookDatabase
 import com.github.mariemmezghani.bookfinder.databinding.FragmentListBinding
@@ -38,6 +42,14 @@ class ListFragment : Fragment() {
         val binding: FragmentListBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
         (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
+        // drawer menu
+        val toggle = ActionBarDrawerToggle(
+            context as Activity?, binding.drawerLayout, binding.toolbar, R.string.open_drawer,
+            R.string.close_drawer
+        )
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        //toolbar
         binding.toolbar.title = "My Reading List"
         binding.addButton.setOnClickListener { view ->
             this.findNavController()
@@ -67,7 +79,28 @@ class ListFragment : Fragment() {
         binding.setLifecycleOwner(this)
         // menu
         setHasOptionsMenu(true)
+        binding.menu.all.setOnClickListener {
+            submitListToAdapter(binding, viewModel.books)
+        }
+        binding.menu.Read.setOnClickListener {
+            submitListToAdapter(binding, viewModel.readBooks)
+        }
+        binding.menu.InProgress.setOnClickListener {
+            submitListToAdapter(binding, viewModel.inProgressBooks)
+        }
+        binding.menu.Unread.setOnClickListener {
+            submitListToAdapter(binding, viewModel.unreadBooks)
+        }
         return binding.root
+    }
+
+    private fun submitListToAdapter(binding: FragmentListBinding, books: LiveData<List<Book>>) {
+        books.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+            binding.drawerLayout.close()
+        })
     }
 
     private fun getDatabase(): BookDao {
