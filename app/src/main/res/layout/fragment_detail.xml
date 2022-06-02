@@ -49,6 +49,8 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/book_name_edittext"
                 android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:text="@={book.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -80,6 +82,8 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/author_edittext"
                 android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:text="@={book.author}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +114,8 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/published_date_string"
                 android:inputType="date"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:text="@={book.publishedDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -150,6 +156,7 @@
                     android:fontFamily="@font/rubik_light"
                     android:paddingRight="@dimen/margin_half"
                     android:text="@string/read"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -160,6 +167,7 @@
                     android:fontFamily="@font/rubik_light"
                     android:paddingEnd="@dimen/margin_half"
                     android:text="@string/unread"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -170,6 +178,7 @@
                     android:fontFamily="@font/rubik_light"
                     android:paddingRight="@dimen/margin_half"
                     android:text="@string/in_progress"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </RadioGroup>
 
