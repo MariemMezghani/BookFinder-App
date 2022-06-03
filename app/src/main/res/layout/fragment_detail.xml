@@ -14,10 +14,12 @@
             type="com.github.mariemmezghani.bookfinder.viewModel.BookViewModel" />
     </data>
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+         android:layout_height="wrap_content">
         <!-- Using ConstraintLayout because it is better than using nested Linear Layouts -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,9 +51,9 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/book_name_edittext"
                 android:inputType="textPersonName"
+                android:text="@={book.name}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:text="@={book.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,9 +84,9 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/author_edittext"
                 android:inputType="textPersonName"
+                android:text="@={book.author}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:text="@={book.author}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/author_textview" />
@@ -114,9 +116,9 @@
                 android:fontFamily="@font/rubik_light"
                 android:hint="@string/published_date_string"
                 android:inputType="date"
+                android:text="@={book.publishedDate}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:text="@={book.publishedDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/published_date_textview" />
@@ -216,5 +218,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+</RelativeLayout>
 </layout>

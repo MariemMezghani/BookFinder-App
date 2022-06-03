@@ -15,6 +15,7 @@ import com.github.mariemmezghani.bookfinder.databinding.FragmentDetailBinding
 import com.github.mariemmezghani.bookfinder.utils.DateInputMask
 import com.github.mariemmezghani.bookfinder.utils.Injection
 import com.github.mariemmezghani.bookfinder.viewModel.BookViewModel
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -43,6 +44,11 @@ class DetailFragment : Fragment() {
         } else {
             book = args
         }
+
+        // load ads
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
         binding.book = book
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
