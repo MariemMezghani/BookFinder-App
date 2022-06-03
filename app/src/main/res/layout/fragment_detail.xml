@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="book"
             type="com.github.mariemmezghani.bookfinder.database.Book" />
@@ -19,12 +18,13 @@
     android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
+         android:layout_height="match_parent">
         <!-- Using ConstraintLayout because it is better than using nested Linear Layouts -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_half">
 
             <TextView
                 android:id="@+id/book_name_textview"
@@ -228,7 +228,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        ads:adUnitId="ca-app-pub-9626425516337123~9890152448">
     </com.google.android.gms.ads.AdView>
 </RelativeLayout>
 </layout>
